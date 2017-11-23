@@ -1,5 +1,6 @@
 package wpl.spring.entity;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,9 +8,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-public class user {
+public class User {
 
-	public user()
+	public User()
 	{
 		
 	}
@@ -84,7 +85,7 @@ public class user {
 		this.securityAnswer = securityAnswer;
 	}
 
-	public user(String email, String firstName, String lastName, String password, String securityQuestion,
+	public User(String email, String firstName, String lastName, String password, String securityQuestion,
 			String securityAnswer) {
 		
 		this.email = email;

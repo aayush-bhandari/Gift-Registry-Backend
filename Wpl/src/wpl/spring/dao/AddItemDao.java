@@ -6,4 +6,6 @@ public interface AddItemDao {
 
 	public void addItem(registryItem ri);
 
+	public void updateItem(registryItem update);
+
 }
