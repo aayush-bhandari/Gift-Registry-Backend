@@ -6,6 +6,7 @@ public interface AddToRegistryService {
 
 	public void addItem(registryItem ri) ;
 	public void updateItem(registryItem update);
+	public void removeItem(registryItem remove);
 		
 
 }

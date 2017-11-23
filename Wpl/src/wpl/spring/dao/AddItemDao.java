@@ -8,4 +8,6 @@ public interface AddItemDao {
 
 	public void updateItem(registryItem update);
 
+	public void removeItem(registryItem remove);
+
 }

@@ -36,4 +36,12 @@ public class AddDaoImpl implements AddItemDao {
 	    
 		
 	}
+
+	public void removeItem(registryItem remove) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		 String stringQuery = "DELETE from registryItem WHERE RegistryID= '"+remove.getRegistrtyId()+"' AND ItemId = '"+remove.getItemId()+"'";
+	    Query query = currentSession.createQuery(stringQuery);
+	    query.executeUpdate();
+		
+	}
 }

@@ -29,5 +29,12 @@ public class AddToRegistryServiceImp implements AddToRegistryService {
 		addItemDao.updateItem(update);
 		
 	}
+
+	@Override
+	@Transactional
+	public void removeItem(registryItem remove) {
+		addItemDao.removeItem(remove);
+		
+	}
 	
 }

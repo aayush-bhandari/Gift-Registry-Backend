@@ -60,5 +60,24 @@ public class AddToRegistryController {
 		return "thankYou";
 	}
 	
+	@RequestMapping("/removeItem")
+	public String removeItem(Model theModel)
+	{
+		registryItem remove = new registryItem();
+		theModel.addAttribute("removeItem",remove);
+		
+		return "remove-item";
+	}
+	
+	//form action: remove
+	@RequestMapping("/remove")
+	public String remove(@ModelAttribute("removeItem") registryItem remove)
+	{
+		//System.out.println("itemid:" +ri.getItemId() + "Quantity: " +ri.getQuantity());
+		//Update item in registry
+		
+		addToRegistryService.removeItem(remove);
+		return "thankYou";
+	}
 	
 }
