@@ -20,7 +20,6 @@ public class AddDaoImpl implements AddItemDao {
 		//get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		// add item
-		
 		currentSession.save(ri);
 		
 	}
@@ -39,7 +38,7 @@ public class AddDaoImpl implements AddItemDao {
 
 	public void removeItem(registryItem remove) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		 String stringQuery = "DELETE from registryItem WHERE RegistryID= '"+remove.getRegistrtyId()+"' AND ItemId = '"+remove.getItemId()+"'";
+		String stringQuery = "DELETE from registryItem WHERE RegistryID= '"+remove.getRegistrtyId()+"' AND ItemId = '"+remove.getItemId()+"'";
 	    Query query = currentSession.createQuery(stringQuery);
 	    query.executeUpdate();
 		

@@ -11,7 +11,7 @@ import wpl.spring.entity.registryItem;
 import wpl.spring.service.AddToRegistryService;
 
 @Controller
-@RequestMapping("/additem")
+@RequestMapping("/item")
 public class AddToRegistryController {
 
 	//inject addToREgistryservice
@@ -19,7 +19,7 @@ public class AddToRegistryController {
 	private AddToRegistryService addToRegistryService;
 	
 	//when user after creating registry click on add items button
-	@RequestMapping("/addPage")
+	@RequestMapping("/addItem")
 	public String addItem(Model theModel)
 	{
 		//create model attribute to bind item data
@@ -74,8 +74,7 @@ public class AddToRegistryController {
 	public String remove(@ModelAttribute("removeItem") registryItem remove)
 	{
 		//System.out.println("itemid:" +ri.getItemId() + "Quantity: " +ri.getQuantity());
-		//Update item in registry
-		
+		//remove items from registry		
 		addToRegistryService.removeItem(remove);
 		return "thankYou";
 	}
