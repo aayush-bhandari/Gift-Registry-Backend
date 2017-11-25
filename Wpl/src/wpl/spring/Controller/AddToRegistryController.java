@@ -1,11 +1,15 @@
 package wpl.spring.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import wpl.spring.entity.Inventory;
+import wpl.spring.entity.Registry;
 import wpl.spring.entity.User;
 import wpl.spring.entity.registryItem;
 import wpl.spring.service.AddToRegistryService;
@@ -17,6 +21,7 @@ public class AddToRegistryController {
 	//inject addToREgistryservice
 	@Autowired
 	private AddToRegistryService addToRegistryService;
+	
 	
 	//when user after creating registry click on add items button
 	@RequestMapping("/addItem")
@@ -73,10 +78,30 @@ public class AddToRegistryController {
 	@RequestMapping("/remove")
 	public String remove(@ModelAttribute("removeItem") registryItem remove)
 	{
-		//System.out.println("itemid:" +ri.getItemId() + "Quantity: " +ri.getQuantity());
 		//remove items from registry		
 		addToRegistryService.removeItem(remove);
 		return "thankYou";
 	}
+	
+	@RequestMapping("/searchItem")
+	public String searchItem(Model theModel)
+	{
+		Inventory search = new Inventory();
+		theModel.addAttribute("searchItem",search);
+		
+		return "search-item";
+	}
+	
+	@RequestMapping("/search")
+	public String search(@ModelAttribute("searchItem") Inventory search, Model newModel)
+	{
+		List<Inventory> itemList =  addToRegistryService.searchItem(search);
+		
+		// NPE if item not found
+		System.out.println(itemList.get(0).getItemId());
+		newModel.addAttribute("itemList", itemList);
+		return "thankYou";
+	}
+	
 	
 }

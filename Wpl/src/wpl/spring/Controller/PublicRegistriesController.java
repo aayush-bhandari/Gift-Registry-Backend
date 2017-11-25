@@ -24,7 +24,7 @@ public class PublicRegistriesController {
 		List<Registry> publicRegistries = publicRegistriesService.getPublicRegistries();
 		
 		//add list to model
-		theModel.addAttribute("publicRegistries", publicRegistries);
+		theModel.addAttribute("publicRegistry", publicRegistries);
 		return "public-registry";
 	}
 	

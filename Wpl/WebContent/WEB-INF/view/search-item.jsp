@@ -7,18 +7,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Add to registry</title>
+<title>Search Items </title>
 </head>
 <body>
 
 
-<form:form method = "POST" action = "add" modelAttribute = "registryitems" >
+<form:form method = "POST" action = "search" modelAttribute = "searchItem" >
 
-Registry ID <form:input path = "registrtyId"/> <br/>
-Item ID <form:input path = "itemId"/> <br/>
-Quantity <form:input path = "quantity"/> <br/>
+Item Name <form:input path = "itemName"/> <br/>
 
-<input type = "submit" value = "Add" />
+<input type = "submit" value = "Search" />
 
 </form:form>
 

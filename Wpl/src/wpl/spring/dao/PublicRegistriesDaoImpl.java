@@ -17,15 +17,13 @@ public class PublicRegistriesDaoImpl implements PublicRegistriesDao {
 	@Autowired 
 	private SessionFactory sessionFactory;
 	
-
-	
 	public List<Registry> getPublicRegistries() {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
 		String stringQuery = "from Registry where Share= "+1+"";
 	    Query query = currentSession.createQuery(stringQuery);
 	    List<Registry> publicRegistries = query.getResultList();
-	    System.out.println(publicRegistries.size());
+	    System.out.println(publicRegistries.get(1).getRegistryName());
 		return publicRegistries; 
 	}
 
