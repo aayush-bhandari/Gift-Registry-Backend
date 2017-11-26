@@ -22,8 +22,8 @@ Item Name <form:input path = "itemName"/> <br/>
 <form:form method = "GET" action = "apply" modelAttribute = "filter" >
 Select Category <br/>
 
-<form:checkbox path="category" value="1"/>1
-<form:checkbox path="category" value="2"/>2
+<form:checkbox path="category" value="Apparels"/>Apparels
+<form:checkbox path="category" value="Electronics"/>Electronics
 <br/>
 
 Weight <form:input path = "weight"/> <br/>

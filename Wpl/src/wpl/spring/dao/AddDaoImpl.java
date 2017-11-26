@@ -25,8 +25,7 @@ public class AddDaoImpl implements AddItemDao {
 		//get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
 		// add item
-		currentSession.save(ri);
-		
+		currentSession.save(ri);	
 	}
 
 	public void updateItem(registryItem update) {
@@ -77,7 +76,7 @@ public class AddDaoImpl implements AddItemDao {
 			stringQuery.append("category IN (");
 			int count =0, size = filter.getCategory().size();
 			while(count<=size-1){
-				stringQuery.append( filter.getCategory().get(count)+",") ;
+				stringQuery.append("'"+filter.getCategory().get(count)+"',") ;
 				count++;
 			}
 			stringQuery.deleteCharAt(stringQuery.length()-1);
@@ -86,8 +85,8 @@ public class AddDaoImpl implements AddItemDao {
 		
 		if(filter.getPrice()>0)
 		{
-			System.out.println(filter.getPrice());
-			System.out.println("value"+ filter.getPrice());
+			//System.out.println("value"+ filter.getPrice());
+			
 			if (filter.getCategory().isEmpty())
 				stringQuery.append(" price <= "+filter.getPrice());
 			else
