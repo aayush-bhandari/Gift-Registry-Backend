@@ -24,30 +24,82 @@ public class AddDaoImpl implements AddItemDao {
 	public void addItem(registryItem ri) {
 		//get current hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		// add item
-		currentSession.save(ri);	
+		
+		//Check if item already exist in Registry
+		registryItem item = (registryItem) currentSession.createQuery(" from registryItem  where RegistryID= "+ri.getRegistrtyId()).uniqueResult();
+		if(item!=null)
+		{
+			ri.setQuantity(ri.getQuantity()+item.getQuantity());
+			updateItem(ri);
+		}
+		else
+		{
+			// add as a new item to registry
+			currentSession.save(ri);
+			
+			//Get quantity of this Item from inventory
+			int inventoryQuantity = getQuantity(ri, currentSession);
+			
+			//Reduce Quantity of this item in our inventory
+			int remainingQuantity = inventoryQuantity - ri.getQuantity();
+			String stringQuery = "UPDATE Inventory SET Quantity=" + remainingQuantity + "WHERE ItemId = " + ri.getItemId();
+			Query query = currentSession.createQuery(stringQuery);
+			query.executeUpdate();
+		}
+		
 	}
 
 	public void updateItem(registryItem update) {
 		
 		Session currentSession = sessionFactory.getCurrentSession();
-    	System.out.println(update.getRegistrtyId());
-	    String stringQuery = "UPDATE registryItem SET Quantity= :quantity WHERE RegistryID= '"+update.getRegistrtyId()+"' AND ItemId = '"+update.getItemId()+"'";
+		//System.out.println(update.getRegistrtyId());
+   
+		//Get previous Quantity from Registry
+		int prevRegistryQuantity = (int) currentSession.createQuery("select quantity from registryItem  where RegistryID= "+update.getRegistrtyId()+" AND ItemId =" + update.getItemId()).uniqueResult();
+	    System.out.println("prevRegistyrQuantity= "+ prevRegistryQuantity);
+	    int inventoryQuantity = getQuantity(update, currentSession);
+	    
+	    // Update Inventory with new value
+	    int updatedQuantity = inventoryQuantity + prevRegistryQuantity-update.getQuantity();
+	    String stringQuery = "UPDATE Inventory SET Quantity= "+updatedQuantity + "WHERE ItemId = " + update.getItemId(); 
 	    Query query = currentSession.createQuery(stringQuery);
+		query.executeUpdate();
+	    
+		//Update Item in  Registry
+	    stringQuery = "UPDATE registryItem SET Quantity= :quantity WHERE RegistryID= '"+update.getRegistrtyId()+"' AND ItemId = '"+update.getItemId()+"'";
+	    query = currentSession.createQuery(stringQuery);
 	    query.setParameter("quantity", update.getQuantity());
 	    query.executeUpdate();
-	    
-		
+	
 	}
 
 	public void removeItem(registryItem remove) {
 		Session currentSession = sessionFactory.getCurrentSession();
-		String stringQuery = "DELETE from registryItem WHERE RegistryID= '"+remove.getRegistrtyId()+"' AND ItemId = '"+remove.getItemId()+"'";
+		
+		//Get previous Quantity from Registry
+		int prevRegistryQuantity = (int) currentSession.createQuery("select quantity from registryItem  where RegistryID= "+remove.getRegistrtyId()+" AND ItemId =" + remove.getItemId()).uniqueResult();
+	    System.out.println("prevRegistyrQuantity= "+ prevRegistryQuantity);
+	    int inventoryQuantity = getQuantity(remove, currentSession);
+	    
+	    // Update Inventory with new value
+	    int updatedQuantity = inventoryQuantity + prevRegistryQuantity;
+	    String stringQuery = "UPDATE Inventory SET Quantity= "+updatedQuantity + "WHERE ItemId = " + remove.getItemId(); 
 	    Query query = currentSession.createQuery(stringQuery);
+		query.executeUpdate();
+		
+		//Delete Item from Registry
+		stringQuery = "DELETE from registryItem WHERE RegistryID= '"+remove.getRegistrtyId()+"' AND ItemId = '"+remove.getItemId()+"'";
+	    query = currentSession.createQuery(stringQuery);
 	    query.executeUpdate();
 		
 	}
 
+	public int getQuantity(registryItem action,Session currentSession )
+	{
+		int inventoryQuantity = (int) currentSession.createQuery("SELECT quantity FROM Inventory WHERE ItemId ="+ action.getItemId()).uniqueResult();
+	    System.out.println("inventoryQuantity= "+ inventoryQuantity);
+	    return inventoryQuantity;
+	}
 	
 	public List<Inventory> searchItem(Inventory search) {
 		
