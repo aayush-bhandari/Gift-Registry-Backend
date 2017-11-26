@@ -29,6 +29,11 @@ Select Category <br/>
 Weight <form:input path = "weight"/> <br/>
 Price  <form:input path = "price"/> <br/>
 
+Select Size <br/>
+<form:checkbox path="size" value="small"/>Small
+<form:checkbox path="size" value="large"/>Large
+<br/>
+
 <input type = "submit" value = "Apply" /> 
 
 </form:form>

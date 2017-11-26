@@ -25,6 +25,7 @@
 					<th>Price</th>
 					<th>Category</th>
 					<th>Weight</th>
+					<th>Size</th>
 				</tr>
 				
 				<c:forEach var= "r" items= "${filterList}">
@@ -34,6 +35,7 @@
 						<td>${r.price}</td>
 						<td>${r.category}</td>
 						<td>${r.weight}</td>
+						<td>${r.size}</td>
 					</tr>
 				</c:forEach>
 			</table>

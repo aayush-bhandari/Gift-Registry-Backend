@@ -110,7 +110,7 @@ public class AddToRegistryController {
 		List<Inventory> itemList = addToRegistryService.filterItem(filter);
 		
 		// NPE if item not found
-		System.out.println(itemList.get(0).getItemId());
+		//System.out.println(itemList.get(0).getItemId());
 		newModel.addAttribute("filterList", itemList);
 		return "filter-results";
 	}

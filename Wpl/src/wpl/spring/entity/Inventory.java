@@ -41,8 +41,16 @@ public class Inventory {
 	@Column(name = "Weight")
 	private float weight;
 	
-	@Column(name = "DeliveryDate")
-	private String deliveryDate;
+	@Column(name = "Size")
+	private String size;
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
 
 	public String getItemName() {
 		return itemName;
@@ -100,13 +108,14 @@ public class Inventory {
 		this.itemId = itemId;
 	}
 
-	public Inventory(String itemName, String description, float price, int quantity, String category, float weight) {
+	public Inventory(String itemName, String description, float price, int quantity, String category, float weight, String size) {
 		this.itemName = itemName;
 		this.description = description;
 		this.price = price;
 		this.quantity = quantity;
 		this.category = category;
 		this.weight = weight;
+		this.size = size;
 	}
 	
 	

@@ -7,7 +7,13 @@ public class Filter {
 	private List category;
 	/*private List weight;
 	private List price;*/
-	
+	private List size;
+	public List getSize() {
+		return size;
+	}
+	public void setSize(List size) {
+		this.size = size;
+	}
 	private float weight;
 	public float getWeight() {
 		return weight;
