@@ -1,6 +1,7 @@
 package wpl.spring.Controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,9 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import wpl.spring.entity.Filter;
 import wpl.spring.entity.Inventory;
-import wpl.spring.entity.Registry;
-import wpl.spring.entity.User;
 import wpl.spring.entity.registryItem;
 import wpl.spring.service.AddToRegistryService;
 
@@ -84,11 +84,12 @@ public class AddToRegistryController {
 	}
 	
 	@RequestMapping("/searchItem")
-	public String searchItem(Model theModel)
+	public String searchItem(Model theModel, Map model)
 	{
 		Inventory search = new Inventory();
+		Filter filter = new Filter();
 		theModel.addAttribute("searchItem",search);
-		
+		model.put("filter",filter);
 		return "search-item";
 	}
 	
@@ -101,6 +102,17 @@ public class AddToRegistryController {
 		System.out.println(itemList.get(0).getItemId());
 		newModel.addAttribute("itemList", itemList);
 		return "thankYou";
+	}
+	
+	@RequestMapping("/apply")
+	public String search(@ModelAttribute("filter") Filter filter, Model newModel)
+	{
+		List<Inventory> itemList = addToRegistryService.filterItem(filter);
+		
+		// NPE if item not found
+		System.out.println(itemList.get(0).getItemId());
+		newModel.addAttribute("filterList", itemList);
+		return "filter-results";
 	}
 	
 	

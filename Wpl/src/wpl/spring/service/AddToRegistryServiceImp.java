@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import wpl.spring.dao.AddItemDao;
+import wpl.spring.entity.Filter;
 import wpl.spring.entity.Inventory;
 import wpl.spring.entity.registryItem;
 
@@ -45,6 +46,13 @@ public class AddToRegistryServiceImp implements AddToRegistryService {
 	public List<Inventory> searchItem(Inventory search) {
 		return addItemDao.searchItem(search);
 		
+	}
+
+	@Override
+	@Transactional
+	public List<Inventory> filterItem(Filter filter) {
+		// TODO Auto-generated method stub
+		return addItemDao.filterItem(filter);
 	}
 	
 }

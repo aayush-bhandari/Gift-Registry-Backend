@@ -15,10 +15,25 @@
 <form:form method = "POST" action = "search" modelAttribute = "searchItem" >
 
 Item Name <form:input path = "itemName"/> <br/>
-
-<input type = "submit" value = "Search" />
+<input type = "submit" value = "Search" /> <br/>
 
 </form:form>
+
+<form:form method = "GET" action = "apply" modelAttribute = "filter" >
+Select Category <br/>
+
+<form:checkbox path="category" value="1"/>1
+<form:checkbox path="category" value="2"/>2
+<br/>
+
+Weight <form:input path = "weight"/> <br/>
+Price  <form:input path = "price"/> <br/>
+
+<input type = "submit" value = "Apply" /> 
+
+</form:form>
+
+
 
 </body>
 </html>

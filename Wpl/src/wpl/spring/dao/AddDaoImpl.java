@@ -8,7 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.SystemPropertyUtils;
 
+import wpl.spring.entity.Filter;
 import wpl.spring.entity.Inventory;
 import wpl.spring.entity.registryItem;
 
@@ -62,5 +64,47 @@ public class AddDaoImpl implements AddItemDao {
 	    	return null;
 	    }
 		
+	}
+
+	
+	public List<Inventory> filterItem(Filter filter) {
+		Session currentSession = sessionFactory.getCurrentSession();
+		StringBuilder stringQuery = new StringBuilder();
+		stringQuery.append("FROM Inventory WHERE ");
+		
+		if(filter.getCategory()!=null)
+		{
+			stringQuery.append("category IN (");
+			int count =0, size = filter.getCategory().size();
+			while(count<=size-1){
+				stringQuery.append( filter.getCategory().get(count)+",") ;
+				count++;
+			}
+			stringQuery.deleteCharAt(stringQuery.length()-1);
+			stringQuery.append(")");
+		}
+		
+		if(filter.getPrice()>0)
+		{
+			System.out.println(filter.getPrice());
+			System.out.println("value"+ filter.getPrice());
+			stringQuery.append(" AND price <= "+filter.getPrice());
+		}
+		
+		if(filter.getWeight()>0)
+		{
+			stringQuery.append(" AND weight <= "+filter.getWeight());
+		}
+		
+		  System.out.println(stringQuery.toString());
+		  Query query = currentSession.createQuery(stringQuery.toString());
+		  List<Inventory> items = query.getResultList();
+		   if (items.size() != 0)
+		    {
+		    	return items;
+		    } else {
+		    	return null;
+		    }
+			
 	}
 }
